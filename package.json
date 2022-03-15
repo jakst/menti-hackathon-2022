@@ -5,7 +5,9 @@
     "./apps/*"
   ],
   "scripts": {
-    "format": "prettier --write '**/*.{ts,tsx,js,css,json,md}'"
+    "format": "prettier --write '**/*.{ts,tsx,js,css,json,md}'",
+    "client:deploy": "vercel .",
+    "storage:deploy": "yarn workspace storage publish"
   },
   "dependencies": {
     "typescript": "^4.6.2"

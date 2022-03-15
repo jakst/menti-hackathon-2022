@@ -1,32 +1,49 @@
 import { useEffect, useState } from 'react';
 import { createClient, PaceState } from '../src/createClient';
 
-interface RegionData {
+interface UserRegionData {
   city: string;
   country: string;
-  continent: string;
+}
+
+interface StorageRegionData {
   colo: string;
 }
 
 function useRegionData() {
-  const [regionData, setRegionData] = useState<RegionData | null>(null);
+  const [userRegionData, setUserRegionData] = useState<UserRegionData | null>(
+    null,
+  );
+  const [storageRegionData, setStorageRegionData] =
+    useState<StorageRegionData | null>(null);
 
   useEffect(() => {
-    fetch('http://localhost:8787/region-data')
+    fetch(`${process.env.NEXT_PUBLIC_STORAGE_FETCH_URL}/user-region`)
       .then((res) => res.json())
-      .then(setRegionData);
+      .then(setUserRegionData);
   }, []);
 
-  if (!regionData) return { userLocation: '...', dataCenterLocation: '...' };
+  useEffect(() => {
+    fetch(`${process.env.NEXT_PUBLIC_STORAGE_FETCH_URL}/storage-region`)
+      .then((res) => res.json())
+      .then(setStorageRegionData);
+  }, []);
 
-  const regionNames = new Intl.DisplayNames(['en'], { type: 'region' });
-  const country = regionNames.of(regionData.country);
+  let userLocation = '...';
+  let dataCenterLocation = '...';
 
-  const userLocation = `${regionData.city}, ${country}`;
+  if (userRegionData) {
+    const regionNames = new Intl.DisplayNames(['en'], { type: 'region' });
+    const country = regionNames.of(userRegionData.country);
+
+    userLocation = `${userRegionData.city}, ${country}`;
+  }
+
+  if (storageRegionData) dataCenterLocation = storageRegionData.colo;
 
   return {
     userLocation,
-    dataCenterLocation: regionData.colo,
+    dataCenterLocation,
   };
 }
 

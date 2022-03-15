@@ -5,7 +5,8 @@
   "description": "A template for kick starting a Cloudflare Workers project",
   "module": "./dist/index.mjs",
   "scripts": {
-    "build": "rollup -c"
+    "build": "rollup -c",
+    "publish": "wrangler publish"
   },
   "author": "{{ authors }}",
   "license": "MIT",

@@ -24,7 +24,9 @@ interface ClientOptions {
 }
 
 export function createClient(options: ClientOptions) {
-  let socket = new WebSocket('ws://localhost:8787/presenter/websocket');
+  let socket = new WebSocket(
+    `${process.env.NEXT_PUBLIC_STORAGE_REALTIME_URL}/presenter/websocket`,
+  );
   let pingTime = 0;
   let pingInterval: ReturnType<typeof setInterval>;
 

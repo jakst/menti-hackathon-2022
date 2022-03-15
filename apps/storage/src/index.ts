@@ -14,8 +14,20 @@ export default {
 };
 
 async function handleRequest(request: Request, env: Env) {
-  let id = env.PRESENTATION.idFromName('A');
-  let obj = env.PRESENTATION.get(id);
+  const id = env.PRESENTATION.idFromName('A');
+  const obj = env.PRESENTATION.get(id);
+
+  const url = new URL(request.url);
+
+  if (url.pathname === '/user-region') {
+    const { city, country } = request.cf!;
+    return new Response(JSON.stringify({ city, country }, null, 2), {
+      headers: {
+        'Content-Type': 'application/json;charset=UTF-8',
+        'Access-Control-Allow-Origin': '*',
+      },
+    });
+  }
 
   return obj.fetch(request.url, request);
 }

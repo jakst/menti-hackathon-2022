@@ -101,17 +101,18 @@ export class Presentation {
     const url = new URL(request.url);
 
     switch (url.pathname) {
-      case '/region-data':
-        const { city, country, continent, colo } = request.cf!;
-        return new Response(
-          JSON.stringify({ city, country, continent, colo }, null, 2),
-          {
-            headers: {
-              'Content-Type': 'application/json;charset=UTF-8',
-              'Access-Control-Allow-Origin': '*',
-            },
+      case '/storage-region':
+        let colo = await this.state.storage.get<string>('colo');
+        if (!colo) {
+          colo = request.cf!.colo;
+          this.state.storage.put('colo', colo);
+        }
+        return new Response(JSON.stringify({ colo }, null, 2), {
+          headers: {
+            'Content-Type': 'application/json;charset=UTF-8',
+            'Access-Control-Allow-Origin': '*',
           },
-        );
+        });
 
       case '/presenter/websocket':
         if (request.headers.get('Upgrade') != 'websocket')
