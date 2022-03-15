@@ -1,80 +1,80 @@
-import { useEffect, useState } from 'react'
-import { createClient, PaceState } from '../src/createClient'
+import { useEffect, useState } from 'react';
+import { createClient, PaceState } from '../src/createClient';
 
 interface RegionData {
-  city: string
-  country: string
-  continent: string
-  colo: string
+  city: string;
+  country: string;
+  continent: string;
+  colo: string;
 }
 
 function useRegionData() {
-  const [regionData, setRegionData] = useState<RegionData | null>(null)
+  const [regionData, setRegionData] = useState<RegionData | null>(null);
 
   useEffect(() => {
     fetch('http://localhost:8787/region-data')
       .then((res) => res.json())
-      .then(setRegionData)
-  }, [])
+      .then(setRegionData);
+  }, []);
 
-  if (!regionData) return { userLocation: '...', dataCenterLocation: '...' }
+  if (!regionData) return { userLocation: '...', dataCenterLocation: '...' };
 
-  const regionNames = new Intl.DisplayNames(['en'], { type: 'region' })
-  const country = regionNames.of(regionData.country)
+  const regionNames = new Intl.DisplayNames(['en'], { type: 'region' });
+  const country = regionNames.of(regionData.country);
 
-  const userLocation = `${regionData.city}, ${country}`
+  const userLocation = `${regionData.city}, ${country}`;
 
   return {
     userLocation,
     dataCenterLocation: regionData.colo,
-  }
+  };
 }
 
 export default function PresenterPage() {
-  const regionData = useRegionData()
+  const regionData = useRegionData();
 
-  const [showDev, setShowDev] = useState(true)
-  const [ping, setPing] = useState(-1)
-  const [isConnected, setIsConnected] = useState(false)
-  const [pace, setPace] = useState<PaceState | null>(null)
+  const [showDev, setShowDev] = useState(true);
+  const [ping, setPing] = useState(-1);
+  const [isConnected, setIsConnected] = useState(false);
+  const [pace, setPace] = useState<PaceState | null>(null);
 
   useEffect(() => {
     function listener(event: KeyboardEvent) {
-      console.log(event.code)
-      if (event.code === 'KeyD') setShowDev((v) => !v)
+      console.log(event.code);
+      if (event.code === 'KeyD') setShowDev((v) => !v);
     }
 
-    document.addEventListener('keydown', listener)
-    return () => document.removeEventListener('keydown', listener)
-  }, [])
+    document.addEventListener('keydown', listener);
+    return () => document.removeEventListener('keydown', listener);
+  }, []);
 
   useEffect(() => {
     const client = createClient({
       onConnect() {
-        setIsConnected(true)
+        setIsConnected(true);
       },
       onDisconnect() {
-        setIsConnected(false)
+        setIsConnected(false);
       },
       onPingPong(value) {
-        setPing(value)
+        setPing(value);
       },
       onPaceChange(value) {
-        setPace(value)
+        setPace(value);
       },
-    })
+    });
 
     document.addEventListener('keydown', (event) => {
-      if (event.code === 'ArrowRight') client.nextSlide()
-      if (event.code === 'ArrowLeft') client.previousSlide()
-    })
+      if (event.code === 'ArrowRight') client.nextSlide();
+      if (event.code === 'ArrowLeft') client.previousSlide();
+    });
 
     return () => {
-      client?.close()
-    }
-  }, [])
+      client?.close();
+    };
+  }, []);
 
-  const isReady = isConnected && pace !== null
+  const isReady = isConnected && pace !== null;
 
   return (
     <div>
@@ -114,7 +114,7 @@ export default function PresenterPage() {
         </div>
       )}
     </div>
-  )
+  );
 }
 
 function DevItem(props: { title: string; value: string }) {
@@ -124,5 +124,5 @@ function DevItem(props: { title: string; value: string }) {
       <br />
       <span className="dev-data">{props.value}</span>
     </div>
-  )
+  );
 }

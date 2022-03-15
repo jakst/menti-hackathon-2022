@@ -1,0 +1,15 @@
+name = "worker"
+account_id = ""
+workers_dev = true
+route = ""
+main = "./src/index.ts"
+
+[build]
+command = "yarn && yarn workspace storage build"
+
+[durable_objects]
+bindings = [{name = "PRESENTATION", class_name = "Presentation"}]
+
+[[migrations]]
+tag = "v1" # Should be unique for each entry
+new_classes = ["Presentation"]

@@ -4,6 +4,9 @@
   "workspaces": [
     "./apps/*"
   ],
+  "scripts": {
+    "format": "prettier --write '**/*.{ts,tsx,js,css,json,md}'"
+  },
   "dependencies": {
     "typescript": "^4.6.2"
   },
