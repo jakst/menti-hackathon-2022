@@ -1,61 +1,9 @@
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { createClient, PaceState } from '../../src/createClient';
+import { useRegionData } from '../../src/useRegionData';
 
-interface UserRegionData {
-  city: string;
-  country: string;
-}
-
-interface StorageRegionData {
-  colo: string;
-}
-
-function useRegionData() {
-  const router = useRouter();
-  const voteCode = router.query['voteCode'] as string;
-
-  console.log('hej', voteCode);
-
-  const [userRegionData, setUserRegionData] = useState<UserRegionData | null>(
-    null,
-  );
-  const [storageRegionData, setStorageRegionData] =
-    useState<StorageRegionData | null>(null);
-
-  useEffect(() => {
-    fetch(`${process.env.NEXT_PUBLIC_STORAGE_FETCH_URL}/user-region`)
-      .then((res) => res.json())
-      .then(setUserRegionData);
-  }, []);
-
-  useEffect(() => {
-    fetch(
-      `${process.env.NEXT_PUBLIC_STORAGE_FETCH_URL}/${voteCode}/storage-region`,
-    )
-      .then((res) => res.json())
-      .then(setStorageRegionData);
-  }, []);
-
-  let userLocation = '...';
-  let dataCenterLocation = '...';
-
-  if (userRegionData) {
-    const regionNames = new Intl.DisplayNames(['en'], { type: 'region' });
-    const country = regionNames.of(userRegionData.country);
-
-    userLocation = `${userRegionData.city}, ${country}`;
-  }
-
-  if (storageRegionData) dataCenterLocation = storageRegionData.colo;
-
-  return {
-    userLocation,
-    dataCenterLocation,
-  };
-}
-
-export default function PresenterPage() {
+export default function PresentPage() {
   const router = useRouter();
   const voteCode = router.query['voteCode'] as string;
 
@@ -83,8 +31,6 @@ function PageContents() {
 
   const router = useRouter();
   const voteCode = router.query['voteCode'] as string;
-
-  console.log(voteCode);
 
   useEffect(() => {
     const client = createClient({
@@ -117,21 +63,8 @@ function PageContents() {
 
   return (
     <div>
-      <div style={{ display: 'flex' }}>
-        <span
-          style={{
-            alignSelf: 'center',
-            backgroundColor: isReady ? 'green' : 'red',
-            width: '1rem',
-            height: '1rem',
-            borderRadius: '50%',
-            marginLeft: 5,
-            marginRight: 5,
-          }}
-        />
-        <h1 style={{ margin: 5 }}>{isReady ? 'Connected' : 'Not connected'}</h1>
-      </div>
-      {router.query['voteCode']}
+      <h1>{voteCode}</h1>
+
       {isReady && <div>Current slide: {pace.currentSlide}</div>}
 
       {showDev && (

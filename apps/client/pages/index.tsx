@@ -8,10 +8,10 @@ export default function PresenterPage() {
   return (
     <div>
       <input type="text" onChange={(event) => setValue(event.target.value)} />
-      <button type="button" onClick={() => router.push(`/present/${value}`)}>
+      <button type="button" onClick={() => router.push(`/${value}/present`)}>
         Present
       </button>
-      <button type="button" onClick={() => router.push(`/vot/${value}`)}>
+      <button type="button" onClick={() => router.push(`/${value}/vote`)}>
         Vote
       </button>
     </div>
