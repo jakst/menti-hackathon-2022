@@ -1,0 +1,23 @@
+body {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.dev-box {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  padding: 20px;
+
+  background-color: #f3f3f3;
+}
+
+.dev-item {
+  margin: 10px;
+}
+
+.dev-title {
+  font-weight: bold;
+}
+
+.dev-data {
+}
