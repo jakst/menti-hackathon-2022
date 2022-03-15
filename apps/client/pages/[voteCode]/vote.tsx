@@ -1,6 +1,6 @@
 import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
-import { createClient, PaceState } from '../../src/createClient';
+import { useEffect, useRef, useState } from 'react';
+import { createClient, PresentationState } from '../../src/createClient';
 import { useRegionData } from '../../src/useRegionData';
 
 export default function VotePage() {
@@ -16,15 +16,21 @@ function PageContents() {
 
   const [ping, setPing] = useState(-1);
   const [isConnected, setIsConnected] = useState(false);
-  const [pace, setPace] = useState<PaceState | null>(null);
+  const [presentation, setPresentation] = useState<PresentationState | null>(
+    null,
+  );
 
   const router = useRouter();
   const voteCode = router.query['voteCode'] as string;
 
+  const clientRef = useRef<ReturnType<typeof createClient> | null>(null);
+
   useEffect(() => {
     const client = createClient({
       voteCode,
-      onConnect() {
+      isVoter: true,
+      onConnect(value) {
+        setPresentation(value);
         setIsConnected(true);
       },
       onDisconnect() {
@@ -34,31 +40,50 @@ function PageContents() {
         setPing(value);
       },
       onPaceChange(value) {
-        setPace(value);
+        setPresentation(value);
       },
     });
 
-    document.addEventListener('keydown', (event) => {
-      if (event.code === 'ArrowRight') client.nextSlide();
-      if (event.code === 'ArrowLeft') client.previousSlide();
-    });
+    clientRef.current = client;
 
     return () => {
-      client?.close();
+      client.close();
     };
   }, []);
 
-  const isReady = isConnected && pace !== null;
+  const isReady = isConnected && presentation !== null;
+
+  const currentSlide = presentation?.slides[presentation.currentSlide];
 
   return (
     <div>
       <div
         className="indicator"
-        style={{ width: `${(100 * (pace?.currentSlide ?? 0)) / 10}%` }}
+        style={{
+          width: presentation
+            ? `${
+                (100 * presentation.currentSlide) /
+                (presentation.slides.length - 1)
+              }%`
+            : 0,
+        }}
       />
-      <h1>{voteCode}</h1>
+      <h2>{voteCode}</h2>
 
-      {isReady && <div>Current slide: {pace.currentSlide}</div>}
+      <div className="voter-content-wrapper">
+        <h1>{currentSlide?.value}</h1>
+
+        <div className="likes">{currentSlide?.likes ?? 0}</div>
+        <div className="like">
+          <button
+            type="button"
+            onClick={() => clientRef.current?.like()}
+            disabled={!currentSlide}
+          >
+            👍
+          </button>
+        </div>
+      </div>
 
       <div className="vote-dev-box">
         <DevItem
