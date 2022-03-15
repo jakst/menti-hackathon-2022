@@ -1,5 +1,6 @@
+import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
-import { createClient, PaceState } from '../src/createClient';
+import { createClient, PaceState } from '../../src/createClient';
 
 interface UserRegionData {
   city: string;
@@ -11,6 +12,11 @@ interface StorageRegionData {
 }
 
 function useRegionData() {
+  const router = useRouter();
+  const voteCode = router.query['voteCode'] as string;
+
+  console.log('hej', voteCode);
+
   const [userRegionData, setUserRegionData] = useState<UserRegionData | null>(
     null,
   );
@@ -24,7 +30,9 @@ function useRegionData() {
   }, []);
 
   useEffect(() => {
-    fetch(`${process.env.NEXT_PUBLIC_STORAGE_FETCH_URL}/storage-region`)
+    fetch(
+      `${process.env.NEXT_PUBLIC_STORAGE_FETCH_URL}/${voteCode}/storage-region`,
+    )
       .then((res) => res.json())
       .then(setStorageRegionData);
   }, []);
@@ -48,6 +56,14 @@ function useRegionData() {
 }
 
 export default function PresenterPage() {
+  const router = useRouter();
+  const voteCode = router.query['voteCode'] as string;
+
+  if (!voteCode) return null;
+  return <PageContents />;
+}
+
+function PageContents() {
   const regionData = useRegionData();
 
   const [showDev, setShowDev] = useState(true);
@@ -65,8 +81,14 @@ export default function PresenterPage() {
     return () => document.removeEventListener('keydown', listener);
   }, []);
 
+  const router = useRouter();
+  const voteCode = router.query['voteCode'] as string;
+
+  console.log(voteCode);
+
   useEffect(() => {
     const client = createClient({
+      voteCode,
       onConnect() {
         setIsConnected(true);
       },
@@ -109,7 +131,7 @@ export default function PresenterPage() {
         />
         <h1 style={{ margin: 5 }}>{isReady ? 'Connected' : 'Not connected'}</h1>
       </div>
-
+      {router.query['voteCode']}
       {isReady && <div>Current slide: {pace.currentSlide}</div>}
 
       {showDev && (

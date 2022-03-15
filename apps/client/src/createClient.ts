@@ -17,6 +17,7 @@ export type Event =
     };
 
 interface ClientOptions {
+  voteCode: string;
   onConnect?: () => void;
   onDisconnect?: () => void;
   onPaceChange?: (data: PaceState) => void;
@@ -25,7 +26,7 @@ interface ClientOptions {
 
 export function createClient(options: ClientOptions) {
   let socket = new WebSocket(
-    `${process.env.NEXT_PUBLIC_STORAGE_REALTIME_URL}/presenter/websocket`,
+    `${process.env.NEXT_PUBLIC_STORAGE_REALTIME_URL}/${options.voteCode}/presenter/websocket`,
   );
   let pingTime = 0;
   let pingInterval: ReturnType<typeof setInterval>;

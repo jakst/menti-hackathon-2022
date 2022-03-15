@@ -14,9 +14,6 @@ export default {
 };
 
 async function handleRequest(request: Request, env: Env) {
-  const id = env.PRESENTATION.idFromName('A');
-  const obj = env.PRESENTATION.get(id);
-
   const url = new URL(request.url);
 
   if (url.pathname === '/user-region') {
@@ -29,5 +26,11 @@ async function handleRequest(request: Request, env: Env) {
     });
   }
 
-  return obj.fetch(request.url, request);
+  const [, voteCode, ...rest] = url.pathname.split('/');
+  const passThroughUrl = url.origin + '/' + rest.join('/');
+
+  const id = env.PRESENTATION.idFromName(voteCode);
+  const obj = env.PRESENTATION.get(id);
+
+  return obj.fetch(passThroughUrl, request);
 }
