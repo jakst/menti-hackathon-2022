@@ -119,9 +119,8 @@ function Form(props: {
   return (
     <div className="value-form">
       {data.map((item, index) => (
-        <div>
+        <div key={item.id}>
           <input
-            key={item.id}
             defaultValue={item.value}
             onChange={(ev) => {
               setData(
