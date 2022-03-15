@@ -25,6 +25,7 @@ function PageContents() {
     function listener(event: KeyboardEvent) {
       console.log(event.code);
       if (event.code === 'KeyD') setShowDev((v) => !v);
+      if (event.code === 'KeyQ') router.push(`/${voteCode}/qr`);
     }
 
     document.addEventListener('keydown', listener);

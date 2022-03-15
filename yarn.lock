@@ -980,6 +980,7 @@ __metadata:
     next: 12.1.0
     react: 17.0.2
     react-dom: 17.0.2
+    react-qr-code: ^2.0.3
     typescript: 4.6.2
   languageName: unknown
   linkType: soft
@@ -3177,7 +3178,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"prop-types@npm:^15.8.1":
+"prop-types@npm:^15.7.2, prop-types@npm:^15.8.1":
   version: 15.8.1
   resolution: "prop-types@npm:15.8.1"
   dependencies:
@@ -3192,6 +3193,13 @@ __metadata:
   version: 2.1.1
   resolution: "punycode@npm:2.1.1"
   checksum: 823bf443c6dd14f669984dea25757b37993f67e8d94698996064035edd43bed8a5a17a9f12e439c2b35df1078c6bec05a6c86e336209eb1061e8025c481168e8
+  languageName: node
+  linkType: hard
+
+"qr.js@npm:0.0.0":
+  version: 0.0.0
+  resolution: "qr.js@npm:0.0.0"
+  checksum: 5ac6c393967bdeaa660e7fd3a501a25eb538c1f6008a4d30ab2b97bbe520e5c236530090773f1578aa0a523cdaa6923c866615e21143f9e7cd22abd41c789b69
   languageName: node
   linkType: hard
 
@@ -3228,6 +3236,19 @@ __metadata:
   version: 16.13.1
   resolution: "react-is@npm:16.13.1"
   checksum: f7a19ac3496de32ca9ae12aa030f00f14a3d45374f1ceca0af707c831b2a6098ef0d6bdae51bd437b0a306d7f01d4677fcc8de7c0d331eb47ad0f46130e53c5f
+  languageName: node
+  linkType: hard
+
+"react-qr-code@npm:^2.0.3":
+  version: 2.0.3
+  resolution: "react-qr-code@npm:2.0.3"
+  dependencies:
+    prop-types: ^15.7.2
+    qr.js: 0.0.0
+  peerDependencies:
+    react: ^16.x || ^17.x
+    react-native-svg: "*"
+  checksum: d82d3c2e8929bc40fdcbab714d088890744bc67aa5de5a998c14352f1fe56ca10032613abb49ea649bd9b8363ed5f482a942e5ed5e676a6f5e0b00a7e9960cb0
   languageName: node
   linkType: hard
 

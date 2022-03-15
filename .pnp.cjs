@@ -1248,6 +1248,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["next", "virtual:a90340927533309496736c06e16f93af4607445ef274a79bec384f328851d1ec0a2812cd5e8e5b7ee7a61f7f3518522bf588f16a2df5adf5e299aa3fcd6dccd7#npm:12.1.0"],\
             ["react", "npm:17.0.2"],\
             ["react-dom", "virtual:a90340927533309496736c06e16f93af4607445ef274a79bec384f328851d1ec0a2812cd5e8e5b7ee7a61f7f3518522bf588f16a2df5adf5e299aa3fcd6dccd7#npm:17.0.2"],\
+            ["react-qr-code", "virtual:a90340927533309496736c06e16f93af4607445ef274a79bec384f328851d1ec0a2812cd5e8e5b7ee7a61f7f3518522bf588f16a2df5adf5e299aa3fcd6dccd7#npm:2.0.3"],\
             ["typescript", "patch:typescript@npm%3A4.6.2#~builtin<compat/typescript>::version=4.6.2&hash=bda367"]\
           ],\
           "linkType": "SOFT"\
@@ -3852,6 +3853,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD"\
         }]\
       ]],\
+      ["qr.js", [\
+        ["npm:0.0.0", {\
+          "packageLocation": "./.yarn/cache/qr.js-npm-0.0.0-eea89f459b-5ac6c39396.zip/node_modules/qr.js/",\
+          "packageDependencies": [\
+            ["qr.js", "npm:0.0.0"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
       ["queue-microtask", [\
         ["npm:1.2.3", {\
           "packageLocation": "./.yarn/cache/queue-microtask-npm-1.2.3-fcc98e4e2d-b676f8c040.zip/node_modules/queue-microtask/",\
@@ -3912,6 +3922,34 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/react-is-npm-16.13.1-a9b9382b4f-f7a19ac349.zip/node_modules/react-is/",\
           "packageDependencies": [\
             ["react-is", "npm:16.13.1"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["react-qr-code", [\
+        ["npm:2.0.3", {\
+          "packageLocation": "./.yarn/cache/react-qr-code-npm-2.0.3-7cd118a90e-d82d3c2e89.zip/node_modules/react-qr-code/",\
+          "packageDependencies": [\
+            ["react-qr-code", "npm:2.0.3"]\
+          ],\
+          "linkType": "SOFT"\
+        }],\
+        ["virtual:a90340927533309496736c06e16f93af4607445ef274a79bec384f328851d1ec0a2812cd5e8e5b7ee7a61f7f3518522bf588f16a2df5adf5e299aa3fcd6dccd7#npm:2.0.3", {\
+          "packageLocation": "./.yarn/__virtual__/react-qr-code-virtual-b47bfe9b57/0/cache/react-qr-code-npm-2.0.3-7cd118a90e-d82d3c2e89.zip/node_modules/react-qr-code/",\
+          "packageDependencies": [\
+            ["react-qr-code", "virtual:a90340927533309496736c06e16f93af4607445ef274a79bec384f328851d1ec0a2812cd5e8e5b7ee7a61f7f3518522bf588f16a2df5adf5e299aa3fcd6dccd7#npm:2.0.3"],\
+            ["@types/react", "npm:17.0.40"],\
+            ["@types/react-native-svg", null],\
+            ["prop-types", "npm:15.8.1"],\
+            ["qr.js", "npm:0.0.0"],\
+            ["react", "npm:17.0.2"],\
+            ["react-native-svg", null]\
+          ],\
+          "packagePeers": [\
+            "@types/react-native-svg",\
+            "@types/react",\
+            "react-native-svg",\
+            "react"\
           ],\
           "linkType": "HARD"\
         }]\
